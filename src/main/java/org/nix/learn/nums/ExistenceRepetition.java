@@ -39,4 +39,18 @@ public class ExistenceRepetition {
         return false;
     }
 
+
+    public static void main(String[] args) {
+        ExistenceRepetition e = new ExistenceRepetition();
+        Integer small = new Integer(123);
+        e.change(e,small);
+        System.out.println(e.i+" "+small);
+    }
+    public int i;
+    public void change( ExistenceRepetition e,Integer b){
+         int value = 0;
+
+        e.i++;
+        b++;
+    }
 }
