@@ -46,7 +46,7 @@ public class Main {
         }
 
         // 城市数量
-        int x = scaner.nextInt();
+        int x = scanner.nextInt();
         // 道路数量x
         int m = scanner.nextInt();
 
