@@ -16,8 +16,8 @@ package org.nix.learn.use;
 public class KMP {
 
     public static void main(String[] args) {
-        String test = "BBC ABCDAB ABCD ABCDABD E";
-        String str = "ABCDABD";
+        String test = "fasjkghagfjkashfkajshfawjh";
+        String str = "fkajsh";
 //        System.out.println(getNext(preStr(str), suffixStr(str)));
 //        for (String s : suffixStr(str)) {
 //            System.out.print(s + " ");
