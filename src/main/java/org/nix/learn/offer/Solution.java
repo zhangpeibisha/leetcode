@@ -2,9 +2,7 @@ package org.nix.learn.offer;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 /**
  * 在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，
@@ -96,7 +94,7 @@ public class Solution {
         }
         int len = list.size();
         ArrayList<Integer> returnV = new ArrayList<>(len);
-        for (int i = len-1; i >= 0 ; i--) {
+        for (int i = len - 1; i >= 0; i--) {
             returnV.add(list.get(i));
         }
         return returnV;
@@ -110,14 +108,14 @@ public class Solution {
         }
         int len = stack.size();
         ArrayList<Integer> va = new ArrayList<>(len);
-        while (true){
+        while (true) {
             try {
                 Integer value = stack.peek();
-                if (value == null){
+                if (value == null) {
                     return va;
                 }
                 va.add(stack.pop());
-            }catch (Exception e){
+            } catch (Exception e) {
                 return va;
             }
         }
@@ -129,25 +127,72 @@ public class Solution {
      * 输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
      * 例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。
      */
-    class TreeNode{
+    class TreeNode {
         int val;
         TreeNode left;
-        TreeNode rigth;
+        TreeNode right;
 
         public TreeNode(int val) {
             this.val = val;
         }
     }
 
-    public TreeNode reConstructBinaryTree(int [] pre,int [] in) {
-
-        return new TreeNode(1);
+    public TreeNode reConstructBinaryTree(int[] pre, int[] in) {
+        if (pre.length == 0 || in.length == 0) {
+            return null;
+        }
+        TreeNode node = new TreeNode(pre[0]);
+        for (int i = 0; i < in.length; i++) {
+            if (pre[0] == in[i]) {
+                node.left = reConstructBinaryTree(Arrays.copyOfRange(pre, 1, i + 1), Arrays.copyOfRange(in, 0, i));
+                node.right = reConstructBinaryTree(Arrays.copyOfRange(pre, i + 1, pre.length), Arrays.copyOfRange(in, i + 1, in.length));
+            }
+        }
+        return node;
     }
 
     @Test
-    public void reConstructBinaryTreeTest(){
-        int[] pre = {1,2,4,7,3,5,6,8};
-        int[] in = {4,7,2,1,5,3,8,6};
+    public void reConstructBinaryTreeTest() {
+        int[] pre = {1, 2, 4, 7, 3, 5, 6, 8};
+        int[] in = {4, 7, 2, 1, 5, 3, 8, 6};
+        reConstructBinaryTree(pre, in);
+        System.out.println();
     }
+
+    // -------------------------------------------------------
+
+    /**
+     * 把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。
+     * 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。
+     *
+     * @param array
+     * @return
+     */
+    public int minNumberInRotateArray(int[] array) {
+        int len = array.length;
+        if (len == 0) {
+            return 0;
+        }
+        Integer integer = null;
+        for (int value : array) {
+            if (integer == null) {
+                integer = value;
+            } else {
+                if (integer > value) {
+                    return value;
+                }else {
+                    integer = value;
+                }
+            }
+        }
+        return 0;
+    }
+
+    @Test
+    public void minNumberInRotateArray(){
+        System.out.println(minNumberInRotateArray(new int[]{3,4,5,1,2}));
+    }
+
+
 
 }
