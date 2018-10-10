@@ -16,8 +16,7 @@ import java.util.*;
 public class Solution {
 
     public static void main(String[] args) {
-        int[][] arr = {{1, 2}, {2, 3}};
-        System.out.println(Find(3, arr));
+        System. out. println(10 % 3 * 2);
     }
 
     public static boolean Find(int target, int[][] array) {
@@ -180,7 +179,7 @@ public class Solution {
             } else {
                 if (integer > value) {
                     return value;
-                }else {
+                } else {
                     integer = value;
                 }
             }
@@ -189,10 +188,51 @@ public class Solution {
     }
 
     @Test
-    public void minNumberInRotateArray(){
-        System.out.println(minNumberInRotateArray(new int[]{3,4,5,1,2}));
+    public void minNumberInRotateArray() {
+        System.out.println(minNumberInRotateArray(new int[]{3, 4, 5, 1, 2}));
     }
 
+    // -------------------------------------------------------
 
+    /**
+     * 用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。
+     */
+
+    Stack<Integer> stack1 = new Stack<Integer>();
+    Stack<Integer> stack2 = new Stack<Integer>();
+
+    public void push(int node) {
+        stack1.push(node);
+    }
+
+    public int pop() {
+        List<Integer> integers = new ArrayList<>(stack2.size());
+        while (!stack2.empty()){
+            integers.add(stack2.pop());
+        }
+        while (!stack1.empty()) {
+            stack2.push(stack1.pop());
+        }
+        for (int i = integers.size() - 1 ; i >= 0; i--) {
+            stack2.push(integers.get(i));
+        }
+        return stack2.pop();
+    }
+
+    @Test
+    public void stackTest() {
+        for (int i = 0; i < 20; i++) {
+            push(i);
+        }
+        for (int i = 0; i < 10; i++) {
+            System.out.print(pop() + " ");
+        }
+        for (int i = 20; i < 40; i++) {
+            push(i);
+        }
+        for (int i = 0; i < 30; i++) {
+            System.out.print(pop() + " ");
+        }
+    }
 
 }
