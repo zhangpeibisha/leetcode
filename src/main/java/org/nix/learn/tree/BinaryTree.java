@@ -23,7 +23,15 @@ public class BinaryTree<T> {
         createTreeByArr(root, arr, 0);
     }
 
-
+    /**
+     * 右孩子节点的个数：Math.pow(2,Math.log((len = arr.length+1))/Math.log(2))-1
+     * Math.log((len = arr.length+1))/Math.log(2)  代表二叉树有多少层  2^k-1 = (len = arr.length)
+     * Math.pow(2,Math.log((len = arr.length+1))/Math.log(2))-1  通过等比求和算出应该有几个含有儿子节点的双亲节点
+     * 等比求和公式（2^0 + 2^1 + 2^2 = (1-2^2)*2^0/(1-2)）
+     * @param root
+     * @param arr
+     * @param index
+     */
     private void createTreeByArr(TreeNode<T> root, T[] arr, int index) {
         int len;
         if (root == null || arr == null || Math.pow(2,Math.log((len = arr.length+1))/Math.log(2))-1 <= index || index < 0) {
