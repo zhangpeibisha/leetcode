@@ -11,10 +11,7 @@ public class Main {
 
 
     public static void main(String[] args) {
-        Scanner in = new Scanner(System.in);
-        String input = in.next();
-        String[] sons = input.split(";");
-        System.out.println(run(sons[0],sons[1]));
+        System.out.println(new Main().hashCode());
     }
 
     public static boolean run(String a, String b) {
@@ -38,5 +35,6 @@ public class Main {
         String[] values = {value.substring(0,i),value.substring(i,value.length())};
         return values[1]+values[0];
     }
+
 
 }

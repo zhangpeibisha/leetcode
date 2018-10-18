@@ -15,10 +15,6 @@ import java.util.*;
  */
 public class Solution {
 
-    public static void main(String[] args) {
-        System. out. println(10 % 3 * 2);
-    }
-
     public static boolean Find(int target, int[][] array) {
         int len = array.length;
 
@@ -207,13 +203,13 @@ public class Solution {
 
     public int pop() {
         List<Integer> integers = new ArrayList<>(stack2.size());
-        while (!stack2.empty()){
+        while (!stack2.empty()) {
             integers.add(stack2.pop());
         }
         while (!stack1.empty()) {
             stack2.push(stack1.pop());
         }
-        for (int i = integers.size() - 1 ; i >= 0; i--) {
+        for (int i = integers.size() - 1; i >= 0; i--) {
             stack2.push(integers.get(i));
         }
         return stack2.pop();
@@ -233,6 +229,134 @@ public class Solution {
         for (int i = 0; i < 30; i++) {
             System.out.print(pop() + " ");
         }
+    }
+
+    /**
+     * 大家都知道斐波那契数列，现在要求输入一个整数n，
+     * 请你输出斐波那契数列的第n项（从0开始，第0项为0）。
+     * n<=39
+     *
+     * @param n
+     * @return
+     */
+    public int fibonacci(int n) {
+
+        if (n <= 0) {
+            return 0;
+        }
+
+        if (0 < n && n <= 2) {
+            return 1;
+        }
+
+        int v1 = 0;
+        int v2 = 1;
+
+        for (int i = 2; i < n; i++) {
+            int temp = v1 + v2;
+            v1 = v2;
+            v2 = temp;
+        }
+        return v2 + v1;
+    }
+
+    @Test
+    public void fidbonacciTest() {
+        System.out.println(fibonacci(6));
+    }
+
+    /**
+     * 一只青蛙一次可以跳上1级台阶，也可以跳上2级。
+     * 求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）
+     *
+     * @param n
+     * @return
+     */
+    public int jumpFloor(int n) {
+        if (n <= 0) {
+            return 0;
+        }
+
+        if (n <= 1) {
+            return 1;
+        }
+
+        if (n == 2) {
+            return 2;
+        }
+
+        int v1 = 1;
+        int v2 = 2;
+
+        for (int i = 3; i < n; i++) {
+            int temp = v1 + v2;
+            v1 = v2;
+            v2 = temp;
+        }
+        return v2 + v1;
+    }
+
+    /**
+     * 一只青蛙一次可以跳上1级台阶，也可以跳上2级……它也可以跳上n级。求该青蛙跳上一个n级的台阶总共有多少种跳法。
+     * <p>
+     * 链接：https://www.nowcoder.com/questionTerminal/22243d016f6b47f2a6928b4313c85387
+     * 来源：牛客网
+     * <p>
+     * 因为n级台阶，第一步有n种跳法：跳1级、跳2级、到跳n级
+     * 跳1级，剩下n-1级，则剩下跳法是f(n-1)
+     * 跳2级，剩下n-2级，则剩下跳法是f(n-2)
+     * 所以f(n)=f(n-1)+f(n-2)+...+f(1)
+     * 因为f(n-1)=f(n-2)+f(n-3)+...+f(1)
+     * 所以f(n)=2*f(n-1)
+     *
+     * @param target
+     * @return
+     */
+    public int jumpFloorII(int target) {
+        return (int) Math.pow(2, target - 1);
+    }
+
+    /**
+     * 输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。
+     *
+     * @param n
+     * @return
+     */
+    public int numberOf1(int n) {
+        long start = System.currentTimeMillis();
+        int temp = n;
+        int mi = 0;
+        int bijiao;
+        while (temp >= (bijiao = (int) Math.pow(2, mi))) {
+            if (temp == bijiao) {
+                return 1;
+            }
+            mi++;
+        }
+        mi--;
+        int number = 0;
+        while (temp != 0) {
+            // 如果相减大于0说明符合要求
+            int pow = (int) Math.pow(2,mi);
+            if (temp - pow < 0){
+                mi--;
+                continue;
+            }
+            temp = temp - pow;
+            mi--;
+            number++;
+        }
+        if (n < 0) {
+            return ++number;
+        }
+        start = System.currentTimeMillis() - start;
+        System.out.println(start);
+        return number;
+    }
+
+    @Test
+    public void numberOf1Test() {
+        System.out.println(numberOf1(1000000000));
     }
 
 }
