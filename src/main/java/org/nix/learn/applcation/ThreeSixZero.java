@@ -1,4 +1,4 @@
-package org.nix.learn.use;
+package org.nix.learn.applcation;
 
 import java.util.ArrayList;
 import java.util.Arrays;

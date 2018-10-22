@@ -1,8 +1,10 @@
 package org.nix.learn.offer;
 
 import org.junit.jupiter.api.Test;
+import sun.rmi.transport.tcp.TCPChannel;
 
 import java.util.*;
+import java.util.concurrent.*;
 
 /**
  * 在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，
@@ -337,8 +339,8 @@ public class Solution {
         int number = 0;
         while (temp != 0) {
             // 如果相减大于0说明符合要求
-            int pow = (int) Math.pow(2,mi);
-            if (temp - pow < 0){
+            int pow = (int) Math.pow(2, mi);
+            if (temp - pow < 0) {
                 mi--;
                 continue;
             }
@@ -359,4 +361,119 @@ public class Solution {
         System.out.println(numberOf1(1000000000));
     }
 
+    /**
+     * 给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。
+     *
+     * @param base
+     * @param exponent
+     * @return
+     */
+    public double Power(double base, int exponent) {
+        if (exponent == 0) {
+            return 1;
+        }
+        if (base == 0) {
+            return 0;
+        }
+        double temp = base;
+        if (exponent > 0) {
+            while (exponent > 1) {
+                temp *= base;
+                exponent--;
+            }
+        } else {
+            while (exponent < 1) {
+                temp /= base;
+                exponent++;
+            }
+        }
+        return temp;
+    }
+
+    /**
+     * 输入一个链表，输出该链表中倒数第k个结点。
+     *
+     * @param head
+     * @param k
+     * @return
+     */
+    public ListNode FindKthToTail(ListNode head, int k) {
+        int size = 0;
+        ListNode temp = head;
+        while (temp != null) {
+            temp = temp.next;
+            size++;
+        }
+        System.out.println(size);
+        size = size - k;
+        System.out.println(size);
+        if (size < 0) {
+            return null;
+        }
+        while (size > 0) {
+            head = head.next;
+            size--;
+        }
+        return head;
+    }
+
+    @Test
+    public void FindKthToTailTest() {
+        ListNode node = new ListNode(1);
+        node.next = new ListNode(2);
+        node.next.next = new ListNode(3);
+        node.next.next.next = new ListNode(4);
+        node.next.next.next.next = new ListNode(5);
+        System.out.println(myReverseList(node));
+    }
+
+    /**
+     * 输入一个链表，反转链表后，输出新链表的表头。
+     *
+     * @param head
+     * @return
+     */
+    public ListNode ReverseList(ListNode head) {
+        if (head == null) {
+            return null;
+        } else if (head.next == null) {
+            return head;
+        }
+        ListNode node = ReverseList(head.next);
+        head.next.next = head;
+        head.next = null;
+        return node;
+    }
+
+    public ListNode myReverseList(ListNode head) {
+        ListNode pre = null;
+        ListNode next = null;
+        while (head != null) {
+            next = head.next;
+            head.next = pre;
+            pre = head;
+            head = next;
+        }
+        return pre;
+    }
+
+    @Test
+    public void test() {
+        int[] arr = {1,2,5,-7,8,-10};
+        System.out.println(run(arr,0,-99999));
+    }
+
+    public int run(int[] arr, int start,int max) {
+        int len = arr.length;
+        int curr = 0;
+        for (int i = start; i < len; i++) {
+            int temp = curr + arr[i];
+            if (temp >=  max) {
+                curr += arr[i];
+            }else {
+              return run(arr,++start,curr);
+            }
+        }
+        return curr;
+    }
 }
