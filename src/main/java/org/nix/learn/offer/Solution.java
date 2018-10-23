@@ -81,6 +81,9 @@ public class Solution {
         public ListNode(int val) {
             this.val = val;
         }
+
+        public ListNode() {
+        }
     }
 
     public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
@@ -420,11 +423,16 @@ public class Solution {
     @Test
     public void FindKthToTailTest() {
         ListNode node = new ListNode(1);
-        node.next = new ListNode(2);
+        node.next = new ListNode(1);
         node.next.next = new ListNode(3);
         node.next.next.next = new ListNode(4);
         node.next.next.next.next = new ListNode(5);
-        System.out.println(myReverseList(node));
+        node = deleteDuplication(node);
+        while (node != null) {
+            System.out.print(node.val + " ");
+            node = node.next;
+        }
+
     }
 
     /**
@@ -457,23 +465,126 @@ public class Solution {
         return pre;
     }
 
-    @Test
-    public void test() {
-        int[] arr = {1,2,5,-7,8,-10};
-        System.out.println(run(arr,0,-99999));
+    /**
+     * 输入一棵二叉树，求该树的深度。
+     * 从根结点到叶结点依次经过的结点（含根、叶结点）形成树的一条路径，
+     * 最长路径的长度为树的深度。
+     */
+    public int TreeDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int left = TreeDepth(root.left);
+        int rigth = TreeDepth(root.right);
+        return left > rigth ? left + 1 : rigth + 1;
     }
 
-    public int run(int[] arr, int start,int max) {
-        int len = arr.length;
-        int curr = 0;
-        for (int i = start; i < len; i++) {
-            int temp = curr + arr[i];
-            if (temp >=  max) {
-                curr += arr[i];
-            }else {
-              return run(arr,++start,curr);
+    /**
+     * 在一个排序的链表中，存在重复的结点，请删除该链表中重复的结点，重复的结点不保留，返回链表头指针。
+     * 例如，链表1->2->3->3->4->4->5 处理后为 1->2->5
+     *
+     * @param pHead
+     * @return
+     */
+    public ListNode deleteDuplication(ListNode pHead) {
+        if (pHead == null || pHead.next == null) {
+            return pHead;
+        }
+        // 创建一个头节点 p1记录没有重复的节点
+        ListNode p1 = new ListNode();
+        p1.next = null;
+        ListNode head = p1;
+        // p2用于跳过重复的节点
+        ListNode p2 = pHead;
+        while (p2 != null) {
+            if (p2.next != null && p2.val == p2.next.val) {
+                while (p2.next != null && p2.val == p2.next.val) {
+                    p2 = p2.next;
+                }
+                // 跳过重复的最后个节点
+                p2 = p2.next;
+                //防止链表尾部出现重复值，p2==null跳出循环而p1没有跳过尾部重复
+                p1.next = p2;
+            } else {
+                // 如果没有重复
+                p1.next = p2;
+                p1 = p2;
+                p2 = p2.next;
             }
         }
-        return curr;
+        // 返回时去掉头节点
+        return head.next;
+    }
+
+    /**
+     * HZ偶尔会拿些专业问题来忽悠那些非计算机专业的同学。
+     * 今天测试组开完会后,他又发话了:在古老的一维模式识别中,常常需要计算连续子向量的最大和,
+     * 当向量全为正数的时候,问题很好解决。但是,如果向量中包含负数,是否应该包含某个负数,
+     * 并期望旁边的正数会弥补它呢？例如:{6,-3,-2,7,-15,1,2,2},连续子向量的最大和为8(从第0个开始,到第3个为止)。
+     * 给一个数组，返回它的最大连续子序列的和，你会不会被他忽悠住？(子向量的长度至少是1)
+     *
+     * @param array
+     * @return
+     */
+    public int FindGreatestSumOfSubArray(int[] array) {
+        if (array == null) {
+            return 0;
+        }
+        int sum = array[0];
+        int tempsum = array[0];
+        int len = array.length;
+        for (int i = 1; i < len; i++) {
+            tempsum = tempsum < 0 ? array[i] : tempsum + array[i];
+            sum = tempsum > sum ? tempsum : sum;
+        }
+        return sum;
+    }
+
+    /**
+     * 写一个函数，求两个整数之和，要求在函数体内不得使用+、-、*、/四则运算符号。
+     *
+     * @param num1
+     * @param num2
+     * @return
+     */
+    public int Add(int num1, int num2) {
+        if (num2 == 0) {
+            return num1;
+        }
+        int tempNum2 = num2 > 0 ? num2 : -num2;
+        for (int i = 0; i < tempNum2; i++) {
+            if (num2 > 0) {
+                num1++;
+            } else {
+                num1--;
+            }
+        }
+        return num1;
+    }
+
+    /**
+     * 从上往下打印出二叉树的每个节点，同层节点从左至右打印。
+     * 公式： 父节点 i 左节点 2*i+1 右节点 2*i+2
+     *
+     * @param root
+     * @return
+     */
+    public ArrayList<Integer> PrintFromTopToBottom(TreeNode root) {
+        ArrayList<Integer> list = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.poll();
+            if (node != null) {
+                list.add(node.val);
+                if (node.left != null) {
+                    queue.offer(node.left);
+                }
+                if (node.right != null) {
+                    queue.offer(node.right);
+                }
+            }
+        }
+        return list;
     }
 }
