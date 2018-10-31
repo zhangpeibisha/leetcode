@@ -587,4 +587,98 @@ public class Solution {
         }
         return list;
     }
+
+    /**
+     * 输入两个单调递增的链表，输出两个链表合成后的链表，当然我们需要合成后的链表满足单调不减规则。
+     *
+     * @param list1
+     * @param list2
+     * @return
+     */
+    public ListNode Merge(ListNode list1, ListNode list2) {
+        if (list1 == null) {
+            return list2;
+        }
+        if (list2 == null) {
+            return list1;
+        }
+        ListNode head = null;
+        ListNode result = head;
+        while (list1 != null && list2 != null) {
+            int one = list1.val;
+            int two = list2.val;
+            if (one > two) {
+                if (head == null) {
+                    result = head = list2;
+                } else {
+                    head.next = list2;
+                    head = head.next;
+                }
+                list2 = list2.next;
+            } else {
+                if (head == null) {
+                    result = head = list1;
+                } else {
+                    head.next = list1;
+                    head = head.next;
+                }
+                list1 = list1.next;
+            }
+        }
+        if (list1 == null) {
+            head.next = list2;
+        } else {
+            head.next = list1;
+        }
+        return result;
+    }
+
+    /**
+     * 输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。
+     * 如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。
+     *
+     * @param sequence
+     * @return
+     */
+    public boolean VerifySquenceOfBST(int[] sequence) {
+        if (sequence == null) {
+            return false;
+        }
+        int len = sequence.length;
+        Integer temp = sequence[0];
+        for (int i = 1; i < len; i++) {
+            if (temp > sequence[i]) {
+                return false;
+            } else {
+                temp = sequence[i];
+            }
+        }
+        return true;
+    }
+
+    public void maoPaoSort(int[] arr) {
+        if (arr == null) {
+            return;
+        }
+        int len = arr.length - 1;
+        for (int i = 0; i < len; i++) {
+            for (int j = 0; j < len - i; j++) {
+                if (arr[j] > arr[j+1]){
+                    int temp = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = temp;
+                }
+            }
+        }
+    }
+
+    @Test
+    public void maoPaoSort(){
+        int[] arr = null;
+        maoPaoSort(arr);
+        for (int v : arr) {
+            System.out.print(v + " ");
+        }
+    }
+
 }
