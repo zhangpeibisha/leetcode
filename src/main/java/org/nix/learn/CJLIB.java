@@ -27,7 +27,6 @@ public class CJLIB extends Test implements MethodInterceptor {
 
     @Override
     public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
-        // TODO Auto-generated method stub
         System.out.println("日志开始...");
         //代理类调用父类的方法
         methodProxy.invokeSuper(o, objects);

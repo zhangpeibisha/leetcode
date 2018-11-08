@@ -663,22 +663,245 @@ public class Solution {
         int len = arr.length - 1;
         for (int i = 0; i < len; i++) {
             for (int j = 0; j < len - i; j++) {
-                if (arr[j] > arr[j+1]){
+                if (arr[j] > arr[j + 1]) {
                     int temp = arr[j];
-                    arr[j] = arr[j+1];
-                    arr[j+1] = temp;
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
                 }
             }
         }
     }
 
     @Test
-    public void maoPaoSort(){
+    public void maoPaoSort() {
         int[] arr = null;
         maoPaoSort(arr);
         for (int v : arr) {
             System.out.print(v + " ");
         }
+    }
+
+    /**
+     * 操作给定的二叉树，将其变换为源二叉树的镜像。
+     *
+     * @param root 头节点
+     */
+    public void Mirror(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        TreeNode temp = root.left;
+        root.left = root.right;
+        root.right = temp;
+        if (root.left != null) {
+            Mirror(root.left);
+        }
+        if (root.right != null) {
+            Mirror(root.right);
+        }
+    }
+
+    class RandomListNode {
+        int label;
+        RandomListNode next;
+        RandomListNode random;
+
+        RandomListNode(int label) {
+            this.label = label;
+        }
+    }
+
+    /**
+     * 输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针指向任意一个节点），
+     * 返回结果为复制后复杂链表的head。（注意，输出结果中请不要返回参数中的节点引用，否则判题程序会直接返回空）
+     *
+     * @param pHead
+     * @return
+     */
+    public RandomListNode Clone(RandomListNode pHead) {
+
+        return null;
+    }
+
+    /**
+     * 定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数
+     * （时间复杂度应为O（1））。
+     */
+    class MyStack {
+
+        Integer min;
+        Stack<Integer> stack = new Stack<>();
+
+        public void push(int node) {
+            if (min == null) {
+                min = node;
+            } else if (min > node) {
+                min = node;
+            }
+            stack.push(node);
+        }
+
+        public void pop() {
+            stack.pop();
+        }
+
+        public int top() {
+            return stack.peek();
+        }
+
+        public int min() {
+            return min;
+        }
+    }
+
+    /**
+     * 输入n个整数，找出其中最小的K个数。
+     * 例如输入4,5,1,6,2,7,3,8这8个数字，则最小的4个数字是1,2,3,4,。
+     *
+     * @param input
+     * @param k
+     * @return
+     */
+    public ArrayList<Integer> GetLeastNumbers_Solution(int[] input, int k) {
+        if (input == null) {
+            return null;
+        }
+        int len = input.length;
+        ArrayList<Integer> result = new ArrayList<>(len);
+        if (len < k) {
+            for (int value : input) {
+                result.add(value);
+            }
+            return result;
+        }
+        Arrays.sort(input);
+        for (int i = 0; i < k; i++) {
+            result.add(input[i]);
+        }
+
+        return result;
+    }
+
+    /**
+     * 在一个字符串(0<=字符串长度<=10000，全部由字母组成)中找到第一个只出现一次的字符,
+     * 并返回它的位置, 如果没有则返回 -1（需要区分大小写）
+     *
+     * @param str
+     * @return
+     */
+    public int FirstNotRepeatingChar(String str) {
+        if (str == null) {
+            return -1;
+        }
+        int len = str.length();
+        int[] chars = new int[52];
+        char[] strCahr = str.toCharArray();
+        for (char value : strCahr) {
+            chars[index(value)]++;
+        }
+        // 寻找出value为1
+        List<Integer> list = indexOne(chars);
+        for (int i = 0; i < len; i++) {
+            if (list.contains(index(strCahr[i]))) {
+                return i + 1;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * 找出数组中值为1的index
+     *
+     * @param value
+     * @return
+     */
+    public static List<Integer> indexOne(int[] value) {
+        int len = value.length;
+        List<Integer> result = new ArrayList<>(len);
+        for (int i = 0; i < len; i++) {
+            if (value[i] == 1) {
+                result.add(i);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * @param c
+     * @return
+     */
+    public static int index(char c) {
+        if ((int) c >= 97 && (int) c <= 122) {
+            return ((int) c) - 97 + 26;
+        }
+        if ((int) c >= 65 && (int) c <= 90) {
+            return ((int) c) - 65;
+        }
+        return -1;
+    }
+
+    @Test
+    public void tse() {
+        System.out.println(MoreThanHalfNum_Solution(new int[]{1}));
+    }
+
+    /**
+     * 数组中有一个数字出现的次数超过数组长度的一半，请找出这个数字。
+     * 例如输入一个长度为9的数组{1,2,3,2,2,2,5,4,2}。由于数字2在数组中出现了5次，
+     * 超过数组长度的一半，因此输出2。如果不存在则输出0。
+     *
+     * @param array
+     * @return
+     */
+    public int MoreThanHalfNum_Solution(int[] array) {
+        if (array == null) {
+            return 0;
+        }
+        int len = array.length;
+        if (len == 1){
+            return array[0];
+        }
+        Arrays.sort(array);
+        int temp = 1;
+        int air = len / 2 + 1;
+        int pre = array[0];
+        for (int i = 1; i < len; i++) {
+            if (pre == array[i]) {
+                temp++;
+                if (exit(temp, air)) {
+                    return pre;
+                }
+            } else {
+                pre = array[i];
+                temp = 1;
+            }
+        }
+        return 0;
+    }
+
+    public static boolean exit(int temp, int air) {
+        if (temp >= air) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 求出1~13的整数中1出现的次数,并算出100~1300的整数中1出现的次数？
+     * 为此他特别数了一下1~13中包含1的数字有1、10、11、12、13因此共出现6次,但是对于后面问题他就没辙了。
+     * ACMer希望你们帮帮他,并把问题更加普遍化,可以很快的求出任意非负整数区间中1出现的次数（从1 到 n 中1出现的次数）。
+     * @param n
+     * @return
+     */
+    public int NumberOf1Between1AndN_Solution(int n) {
+        // 首先求得N是多少位数
+        int nLength = length(n);
+
+        return 0;
+    }
+
+    public static int length(int n){
+        return 1;
     }
 
 }
