@@ -11,6 +11,10 @@ public class A {
         System.out.println("父类静态模块 A");
     }
 
+    {
+        System.out.println("父类模块==========");
+    }
+
     public A() {
         System.out.println("父类构造模块");
     }

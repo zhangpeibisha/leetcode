@@ -1,5 +1,9 @@
 package org.nix.learn.utils;
 
+import java.util.Queue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.locks.ReentrantLock;
+
 /**
  * @author zhangpei
  * @version 1.0
@@ -9,6 +13,10 @@ public class B extends A{
 
     static {
         System.out.println("子类静态模块");
+    }
+
+    {
+        System.out.println("子类模块==========");
     }
 
     public B() {
@@ -25,5 +33,10 @@ public class B extends A{
         a.method();
         System.out.println();
         new B();
+        ConcurrentHashMap concurrentHashMap;
+        Queue queue;
+        ReentrantLock reentrantLock;
+        StringBuilder builder;
+        StringBuffer buffer;
     }
 }
