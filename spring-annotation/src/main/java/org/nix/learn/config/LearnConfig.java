@@ -1,7 +1,6 @@
 package org.nix.learn.config;
 
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
+
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -11,8 +10,6 @@ import org.springframework.context.annotation.Configuration;
  * @date 2019/2/9
  */
 @Configuration(value = "你到底是是不是名字")
-@EnableAutoConfiguration
-@ComponentScan
 public class LearnConfig {
 
 }
