@@ -1,0 +1,43 @@
+### spring 注解开发
+
+1. @SpringBootApplication：包含了
+   1. @ComponentScan
+   2. @Configuration
+   3. @EnableAutoConfiguration注解
+   4. 其中@ComponentScan让spring Boot扫描到Configuration类并把它加入到程序上下文。
+
+| 注解参数 | 参数类型 |注解参数默认值 | 注解参数意义 |
+|  :---:  | :---: |   :---:   |  :---: |
+exclude | class 数组 | {} | 指定排除哪些类 |
+excludeName | string 数组 | {} | 指定哪些名字的bean被排除 |
+basePackages| string 数组 | {} | 指定扫描哪些包下面的class
+basePackageClasses | class 数组 | {} | 指定扫描包里面的指定类进行加载
+
+2. @Configuration 等同于spring的XML配置文件；使用Java代码可以检查类型安全。
+
+| 注解参数 | 参数类型 |注解参数默认值 | 注解参数意义 |
+|  :---:  | :---: |   :---:   |  :---: |
+|  value | string | "" | 代表该配置类注入容器中的名字，如果为 ""的话则为类名字且第一个字母小写
+
+3. @EnableAutoConfiguration 自动配置。
+
+| 注解参数 | 参数类型 |注解参数默认值 | 注解参数意义 |
+|  :---:  | :---: |   :---:   |  :---: |
+| exclude | class数组 | {} | 排除哪些类不扫描
+| excludeName | string 数组 | {} | 指定哪些名字为指定的名字的bean不被注入
+
+4. @ComponentScan 组件扫描，可自动发现和装配一些Bean。
+
+| 注解参数 | 参数类型 |注解参数默认值 | 注解参数意义 |
+|  :---:  | :---: |   :---:   |  :---: |
+| value | string | basePackages | 默认扫描启动类下面的所有组件bean
+| basePackages |  string | basePackages | 默认扫描启动类下面的所有组件bean
+| basePackageClasses | class 数组 | {} | {@link #basePackages}的类型安全替代方案，用于指定包扫描带注释的组件。 将扫描指定的每个类的包。 <p>考虑在每个包中创建一个特殊的无操作标记类或接口
+| nameGenerator | BeanNameGenerator 接口实现类 | BeanNameGenerator | {@link BeanNameGenerator}类，用于命名检测到的组件在Spring容器内。
+| scopeResolver | ScopeMetadataResolver接口实现类 | AnnotationScopeMetadataResolver.class | {@link ScopeMetadataResolver}用于解析检测到的组件的范围。
+| resourcePattern | string | &#215;&#215;/&#215;.class | 正则表达式确定扫描的类
+| useDefaultFilters | boolean | true | 是否使用默认的过滤器扫描bean
+| includeFilters | Filter注解 | {} | 指定使用哪些类，可以自定义注解并引用该参数引入到spring的扫描中，然后注入容器中
+| excludeFilters | Filter注解 | {} | 指定排除哪些类，用于指定如何排除bean的规则
+| lazyInit | boolean | false | 是否启动懒加载
+
