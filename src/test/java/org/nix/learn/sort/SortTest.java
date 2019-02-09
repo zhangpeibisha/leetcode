@@ -1,12 +1,13 @@
 package org.nix.learn.sort;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SortTest {
 
-    Sort sort = new Sort();
+    AbstractSort sort;
 
     int[] nums = new int[]{5, 8, 1, 2, 6, 5, 4, 2};
 
@@ -14,7 +15,27 @@ class SortTest {
 
     @Test
     void insertSort() {
-        sort.insertSort(nums);
+        sort = new InsertSort();
+    }
+
+    @Test
+    void bubbleSort() {
+        sort = new BubbleSort();
+    }
+
+    @Test
+    void chooseSort() {
+        sort = new ChooseSort();
+    }
+
+    @Test
+    void quickSort() {
+        sort = new QuickSort();
+    }
+
+    @AfterEach
+    public void afterMethod() {
+        sort.run(nums);
         assertArrayEquals(result, nums);
     }
 }
