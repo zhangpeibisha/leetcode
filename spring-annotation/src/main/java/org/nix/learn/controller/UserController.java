@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.nix.learn.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,10 +20,14 @@ import javax.annotation.Resource;
  */
 @RestController
 @Qualifier
+@Scope
 public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Value("#{server.port}")
+    private String value;
 
     @Resource
     private UserController userController;
