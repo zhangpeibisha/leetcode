@@ -33,6 +33,11 @@ class SortTest {
         sort = new QuickSort();
     }
 
+    @Test
+    void heapSort(){
+        sort = new HeapSort();
+    }
+
     @AfterEach
     public void afterMethod() {
         sort.run(nums);
