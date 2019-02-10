@@ -147,8 +147,51 @@ basePackageClasses | class 数组 | {} | 指定扫描包里面的指定类进行
 | ignoreUnknownFields | boolean | true | 标记表示绑定到此对象时应忽略未知字段。未知字段可能是属性中出错的标志。
 | exceptionIfInvalid | boolean | true | 标记表示如果可以使用Validator，则应引发异常，该类使用{@link Validated @Validated}注释，验证失败。 如果它设置为false，将吞下验证错误。 他们将被记录，但是不传播给调用者
 
+21. @JsonView json工具类
+
+> 使用方法
+
+```java
+@Data
+public class User {
+
+    public interface SimpleUser{}
+
+    public interface DetailUser extends SimpleUser{}
+
+    @JsonView(value = SimpleUser.class)
+    private Integer age;
+
+    @JsonView(value = SimpleUser.class)
+    @JsonBackReference
+    private String name;
+
+    @JsonView(value = DetailUser.class)
+    private String password;
 
 
+    public static void main(String[] args) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        //创建对象
+        User user = new User();
+        user.setAge(10);
+        user.setName("zhangpei");
+        user.setPassword("dfafafafas");
+        //序列化
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        objectMapper.writerWithView(User.DetailUser.class).writeValue(bos, user);
+        System.out.println(bos.toString());
+
+        bos.reset();
+        objectMapper.writerWithView(User.SimpleUser.class).writeValue(bos, user);
+        System.out.println(bos.toString());
+    }
+}
+```
+
+| 注解参数 | 参数类型 |注解参数默认值 | 注解参数意义 |
+|  :---:  | :---: |   :---:   |  :---: |
+| value | class数组 | {} | 指定该json属于哪个类
 
 
 
