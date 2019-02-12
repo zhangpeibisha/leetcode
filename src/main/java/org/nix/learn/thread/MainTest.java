@@ -1,8 +1,6 @@
 package org.nix.learn.thread;
 
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.*;
 
 /**
  * @author zhangpei
@@ -12,12 +10,20 @@ import java.util.concurrent.LinkedBlockingDeque;
  */
 public class MainTest {
 
+    /**
+     * 双头队列
+     */
     private BlockingDeque blockingDeque = new LinkedBlockingDeque();
 
     private ConcurrentHashMap<String, String> map = new ConcurrentHashMap<String, String>();
 
     {
         map.putIfAbsent("z", "b");
+    }
+
+    public static void main(String[] args) {
+        CompletionService completionService = new ExecutorCompletionService(Executors.newCachedThreadPool());
+
     }
 
     private static final String A = "";

@@ -204,3 +204,5 @@ public class User {
 | 注解参数 | 参数类型 |注解参数默认值 | 注解参数意义 |
 |  :---:  | :---: |   :---:   |  :---: |
 | value | string | 必填 | 1. @GuardedBy( "this" ) 受对象内部锁保护 @GuardedBy( "fieldName" ) 受 与fieldName引用相关联的锁 保护 2. @GuardedBy( "ClassName.fieldName" ) 受 一个类的静态field的锁 保存 3. @GuardedBy( "methodName()" ) 锁对象是 methodName() 方法的返值，受这个锁保护。 4. @GuardedBy( "ClassName.class" ) 受 ClassName类的直接锁对象保护。而不是这个类的某个
+
+24. @FrameworkEndpoint @Controller的同义词，但仅用于框架提供的端点（因此它永远不会与用@Controller定义的用户自己的端点冲突）。
