@@ -54,6 +54,7 @@ public class MyList {
     }
 
     public static void main(String[] args) {
+
         MyList myList = new MyList(new ArrayList<>(), 10);
         for (int i = 0; i < 9; i++) {
             try {

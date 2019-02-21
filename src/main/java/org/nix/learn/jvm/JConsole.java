@@ -20,7 +20,7 @@ public class JConsole {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        fillHeap(1000);
+        fillHeap(2000);
         System.gc();
     }
 
